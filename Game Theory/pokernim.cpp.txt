@@ -1,0 +1,58 @@
+bool nim(vector<int>& piles) {
+	int Xor = 0;
+	int n = piles.size();
+	for(int i = 0; i < n; i++) {
+		Xor ^= piles[i];
+	}
+	return (Xor > 0);
+}
+
+// Nim variant #1
+// Misère Nim
+// Classical nim except the player who removes the last stone will loose
+bool misereNim(vector<int>& piles) {
+	int Xor = 0;
+	int n = (int)piles.size();
+	bool allOnes = true;
+	for(int i = 0; i < n; i++) {
+		if(piles[i] != -1) {
+			allOnes = false;
+			break;
+		}
+		Xor ^= piles[i];
+	}
+	if(allOnes) {
+		return false;
+	}
+	return (Xor > 0);
+}
+
+
+bool nimble(vector<int>& squares) {
+	int n = (int)squares.size();
+	int Xor = 0;
+	for(int i = 0; i < n; i++) {
+		// optimization: xoring i with Xor 'squares[i]' times
+		if(squares[i] & 1) {
+			Xor ^= i;
+		}
+	}
+	return (Xor > 0);
+}
+
+// Nim variant #3
+// Poker nim
+// Bogus nim: Exactly nim except now 
+// any player can add one or more stones to any piles
+bool pokerNim(vector<int>& piles) {
+	// adding stones has no effect as in the next turn, the other player can mimic the first player turn
+	// and remove same number of stones
+	return nim(piles);
+}
+
+
+bool primePower(int n) {
+	vector<int>factors;
+	primeFactors(n, factors);
+	return nim(factors);
+}
